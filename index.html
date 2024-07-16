@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Web With tailwindcss and DaisyUI</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .section-bg {
+            background: linear-gradient(to right, rgba(107, 114, 128, 0.8), rgba(156, 163, 175, 0.8));
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animated-bg {
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            top: -100%;
+            left: -100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0) 70%);
+            animation: move-background 10s linear infinite;
+        }
+
+        @keyframes move-background {
+            0% {
+                transform: translate(-30%, -30%);
+            }
+            100% {
+                transform: translate(30%, 30%);
+            }
+        }
+
+    
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+       
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none; 
+        }
+
+
+
+.hero {
+    margin-top: 64px; 
+}
+    </style>
+</head>
+
+<body class="">
+
+    <section class="bg-gradient-to-br from-blue-400 to-blue-600 bg-opacity-75 section-bg relative overflow-hidden pb-16">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-blue-100 to-transparent blur opacity-50 scale-150 transform origin-top-right"></div>
+        </div>
+        <nav class="sticky top-0 z-50 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0">
+                        <a href="#" class="flex items-center">
+                            <img src="smkti.png" alt="Logo" class="h-8 w-auto">
+                            <span class="ml-2 text-xl font-bold text-gray-800">SMK TI</span>
+                        </a>
+                    </div>
+
+                    <!-- Menu Items -->
+                    <div class="hidden md:flex md:space-x-4">
+                        <a href="#"
+                            class="text-gray-800 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Home</a>
+                        <a href="#"
+                            class="text-gray-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">About</a>
+                        <a href="#"
+                            class="text-gray-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Services</a>
+                        <a href="#"
+                            class="text-gray-600 hover:text-indigo-600 px-3 py-2 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Contact</a>
+                    </div>
+
+                    <!-- Right buttons -->
+                    <div class="flex md:hidden">
+                        <button id="toggleButton"
+                            class="text-gray-800 hover:text-indigo-600 focus:outline-none px-3 py-2 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Login</button>
+                        <button
+                            class="bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none px-4 py-2 ml-3 text-sm font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Sign
+                            Up</button>
+                    </div>
+
+                    <!-- Hamburger Menu for mobile -->
+                    <div class="md:hidden">
+                        <button id="mobileMenuButton"
+                            class="text-gray-800 hover:text-indigo-600 focus:outline-none px-3 py-2 text-xl"><svg
+                                class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Overlay for mobile menu -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Responsive Menu for mobile -->
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#"
+                    class="text-gray-800 hover:text-indigo-600 block px-3 py-2 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Home</a>
+                <a href="#"
+                    class="text-gray-600 hover:text-indigo-600 block px-3 py-2 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">About</a>
+                <a href="#"
+                    class="text-gray-600 hover:text-indigo-600 block px-3 py-2 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Services</a>
+                <a href="#"
+                    class="text-gray-600 hover:text-indigo-600 block px-3 py-2 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Contact</a>
+                <button
+                    class="text-gray-800 hover:text-indigo-600 block px-3 py-2 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Login</button>
+                <button
+                    class="bg-indigo-600 text-white hover:bg-indigo-700 block px-4 py-2 mt-1 text-base font-medium transition duration-300 ease-in-out transform hover:-translate-y-1">Sign
+                    Up</button>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero  min-h-screen mt-6">
+            <div class="hero-content flex-col lg:flex-row">
+                <div class="mockup-phone relative w-56 md:w-80 h-96 md:h-96"> <!-- Ubah ukuran di sini -->
+                    <div class="camera h-2 w-2 bg-gray-600 rounded-full absolute top-0 left-1/2 transform -translate-x-1/2"></div>
+                    <div class="display bg-white rounded-lg overflow-hidden shadow-lg h-full">
+                        <img src="android.jpg" alt="" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="ml-6">
+                    <h1 class="text-5xl font-bold">Santri Mandiri Cakap Teknologi</h1>
+                    <p class="py-6">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui iure magni similique modi
+                        adipisci perferendis incidunt culpa optio vitae, inventore illo accusantium deleniti
+                        praesentium expedita.
+                    </p>
+                    
+                    <div class="flex">
+                        <input type="text" class="input input-bordered w-48 mr-2" placeholder="Search">
+                        <button class="btn btn-primary transition duration-300 ease-in-out transform hover:-translate-y-1">Get Started</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="px-4 md:px-6 py-12">
+        <div class="stats shadow flex flex-wrap justify-center gap-6">
+            <div class="stat w-full sm:w-auto mb-8 sm:mb-0 text-center fade-in-up">
+                <div class="stat-figure text-primary">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        class="inline-block h-8 w-8 stroke-current">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                </div>
+                <div class="stat-title">Total Likes</div>
+                <div class="stat-value text-primary">25.6K</div>
+                <div class="stat-desc">21% more than last month</div>
+            </div>
+
+            <div class="stat w-full sm:w-auto mb-8 sm:mb-0 text-center fade-in-up">
+                <div class="stat-figure text-secondary">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        class="inline-block h-8 w-8 stroke-current">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div class="stat-title">Page Views</div>
+                <div class="stat-value text-secondary">2.6M</div>
+                <div class="stat-desc">21% more than last month</div>
+            </div>
+
+            <div class="stat w-full sm:w-auto mb-8 sm:mb-0 text-center fade-in-up">
+                <div class="stat-figure text-secondary">
+                    <div class="avatar online">
+                        <div class="w-16 rounded-full">
+                            <img src="marshaa.jpg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-value">Maulana<br>Alwi</div>
+                <div class="stat-title">Pemula</div>
+                <div class="stat-desc text-secondary">31 tasks remaining</div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+
+        mobileMenuButton.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+            overlay.classList.toggle('hidden');
+        });
+
+        overlay.addEventListener('click', function () {
+            mobileMenu.classList.add('hidden');
+            overlay.classList.add('hidden');
+        });
+    </script>
+
+    
+    <script>
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('overlay');
+
+        mobileMenuButton.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+            overlay.classList.toggle('hidden');
+        });
+
+        overlay.addEventListener('click', function () {
+            mobileMenu.classList.add('hidden');
+            overlay.classList.add('hidden');
+        });
+    </script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fadeElems = document.querySelectorAll('.fade-in-up');
+            
+            const fadeInOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const fadeInObserver = new IntersectionObserver(function(entries, fadeInObserver) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        fadeInObserver.unobserve(entry.target);
+                    }
+                });
+            }, fadeInOptions);
+
+            fadeElems.forEach(fadeElem => {
+                fadeInObserver.observe(fadeElem);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
